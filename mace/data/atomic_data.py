@@ -111,7 +111,7 @@ class AtomicData(torch_geometric.data.Data):
         cls, config: Configuration, z_table: AtomicNumberTable, cutoff: float
     ) -> "AtomicData":
         edge_index, shifts, unit_shifts = get_neighborhood(
-            positions=config.positions, cutoff=cutoff, pbc=config.pbc, cell=config.cell
+            positions=config.positions, cutoff=cutoff, pbc=config.pbc, cell=config.cell, atomic_numbers=config.atomic_numbers
         )
         indices = atomic_numbers_to_indices(config.atomic_numbers, z_table=z_table)
         one_hot = to_one_hot(

@@ -10,6 +10,7 @@ def get_neighborhood(
     pbc: Optional[Tuple[bool, bool, bool]] = None,
     cell: Optional[np.ndarray] = None,  # [3, 3]
     true_self_interaction=False,
+    atomic_numbers: Optional[np.ndarray] = None
 ) -> Tuple[np.ndarray, np.ndarray]:
     if pbc is None:
         pbc = (False, False, False)
@@ -55,6 +56,15 @@ def get_neighborhood(
         receiver = receiver[keep_edge]
         unit_shifts = unit_shifts[keep_edge]
 
+    if atomic_numbers is not None:
+        ismm = atomic_numbers >= 49
+        mmedge = np.logical_and(ismm[sender],ismm[receiver])
+        keep_edge = ~mmedge
+        
+        sender = sender[keep_edge]
+        receiver = receiver[keep_edge]
+        unit_shifts = unit_shifts[keep_edge]
+        
     # Build output
     edge_index = np.stack((sender, receiver))  # [2, n_edges]
 

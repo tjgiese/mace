@@ -285,7 +285,19 @@ def compute_average_E0s(
     Function to compute the average interaction energy of each chemical element
     returns dictionary of E0s
     """
+    import copy
     len_train = len(collections_train)
+
+    map_z_table = {}
+    new_z_table = []
+    for i in range(len(z_table)):
+        z = z_table.zs[i]
+        if z < 49:
+            map_z_table[z] = i
+            new_z_table.append(z)
+    old_z_table = copy.deepcopy(z_table)
+    z_table = AtomicNumberTable(new_z_table)
+    
     len_zs = len(z_table)
     A = np.zeros((len_train, len_zs))
     B = np.zeros(len_train)
@@ -305,6 +317,11 @@ def compute_average_E0s(
         atomic_energies_dict = {}
         for i, z in enumerate(z_table.zs):
             atomic_energies_dict[z] = 0.0
+
+    for z in old_z_table.zs:
+        if z not in atomic_energies_dict:
+            atomic_energies_dict[z] = 0.0
+            
     return atomic_energies_dict
 
 

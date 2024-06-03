@@ -191,8 +191,7 @@ class MACECalculator(Calculator):
             dipole = torch.zeros(num_models, 3, device=self.device)
             dict_of_tensors.update({"dipole": dipole})
         return dict_of_tensors
-    
-    
+
     def _atoms_to_batch(self, atoms):
         config = data.config_from_atoms(atoms, charges_key=self.charges_key)
         data_loader = torch_geometric.dataloader.DataLoader(
@@ -207,7 +206,6 @@ class MACECalculator(Calculator):
         )
         batch = next(iter(data_loader)).to(self.device)
         return batch
-
 
     def _clone_batch(self, batch):
         batch_clone = batch.clone()
