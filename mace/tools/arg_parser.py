@@ -54,7 +54,7 @@ def build_default_arg_parser() -> argparse.ArgumentParser:
         "--device",
         help="select device",
         type=str,
-        choices=["cpu", "cuda", "mps"],
+        choices=["cpu", "cuda", "mps", "cuda:0", "cuda:1", "cuda:2", "cuda:3"],
         default="cpu",
     )
     parser.add_argument(
