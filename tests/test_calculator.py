@@ -375,7 +375,7 @@ def test_calculator_node_energy(fitting_configs, trained_model):
     for at in fitting_configs:
         trained_model.calculate(at)
         node_energies = trained_model.results["node_energy"]
-        batch = trained_model._atoms_to_batch(at)
+        batch = trained_model._atoms_to_batch(at)  # pylint: disable=protected-access
         node_e0 = (
             trained_model.models[0]
             .atomic_energies_fn(batch["node_attrs"])
